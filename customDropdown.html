@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      custom dropdown
+    </title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        flex-direction: column;
+      }
+
+      .dropDown{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        border: 2px solid black;
+        border-radius: 10px;
+
+        width: 200px;
+        padding-left: 8px;
+        padding-right: 8px;
+        margin-bottom: 8px;
+        cursor: pointer;
+      }
+
+      .down-arrow {
+        width: 10px;  
+        transform: rotate(180deg);
+      }
+
+      .down-arrow-active {
+        transform: rotate(360deg);
+      }
+
+      .dropdown-content {
+        border: 2px solid black;
+        border-radius: 10px;
+
+        width: 216px;
+        display: none;
+      }
+
+      .dropdown-content-active {
+        display: block;
+      }
+
+      .content {
+        border-bottom: 2px solid black;
+
+        padding-left: 8px;
+        padding-right: 8px;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        margin: 0;
+      
+
+        display: flex;
+        justify-content: space-between;
+
+        cursor: pointer;
+      }
+
+      div div:last-child {
+        border: none;
+      }
+
+      .content p {
+        margin: 0;
+      }
+
+      .checked-mark {
+        width: 16px;
+        display: none;
+      }
+
+      .checked-mark-active {
+        display: block;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="dropDown">
+      <p class="highlight">Select an Item</p>
+      <img class="down-arrow" src="./img/arrow-down-angle-svgrepo-com.svg">
+    </div>
+
+    <div class="dropdown-content">
+      <div class="content">
+        <p>First Item</p>
+        <img class="checked-mark" src="./img/check-circle-fill-svgrepo-com.svg">
+      </div>
+      <div class="content">
+        <p>Second Item</p>
+        <img class="checked-mark" src="./img/check-circle-fill-svgrepo-com.svg">
+      </div>
+      <div class="content">
+        <p>Third Item</p>
+        <img class="checked-mark" src="./img/check-circle-fill-svgrepo-com.svg">
+      </div>
+      <div class="content">
+        <p>Fourth Item</p>
+        <img class="checked-mark" src="./img/check-circle-fill-svgrepo-com.svg">
+      </div>
+      <div class="content">
+        <p>Fifth Item</p>
+        <img class="checked-mark" src="./img/check-circle-fill-svgrepo-com.svg">
+      </div>
+    </div>
+
+    <script>
+
+      let activeDropDown = false;
+
+      document.querySelector('.dropDown').addEventListener('click',  () => {
+        displayDropdownContent();
+      })
+
+      function displayDropdownContent() {
+        if(!activeDropDown){
+        document.querySelector('.down-arrow').classList.add('down-arrow-active');
+        document.querySelector('.dropdown-content').classList.add('dropdown-content-active');
+        activeDropDown = true;
+        } else {
+          document.querySelector('.down-arrow').classList.remove('down-arrow-active');
+        document.querySelector('.dropdown-content').classList.remove('dropdown-content-active');
+        activeDropDown = false;
+        }
+      }
+
+      
+      let selectedItem; 
+
+      document.querySelectorAll('.content').forEach((content) => {
+
+        content.addEventListener('click', () => {
+          content.querySelector('.checked-mark').classList.add('checked-mark-active');
+          if (selectedItem) {
+            selectedItem.querySelector('.checked-mark').classList.remove('checked-mark-active');
+            selectedItem = content;
+          } else {
+            selectedItem = content;
+          }
+
+          document.querySelector('.highlight').innerHTML = content.querySelector('p').innerHTML;
+          displayDropdownContent();
+        })
+      });
+
+
+    </script>
+  </body>
+</html>
